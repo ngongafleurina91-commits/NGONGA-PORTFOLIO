@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Portfolio</title>
+    <style>
+        /* Variables de thème (Mode Sombre par défaut) */
+        :root {
+            --bg-color: #070230;
+            --card-bg: #0f3238;
+            --text-main: #0cfa53;
+            --text-muted: #17c0a7;
+            --primary-color: #4fbddb; /* Bleu dynamique */
+            --border-color: #1ce7e7;
+        }
+
+        /* Variables pour le Mode Clair */
+        [data-theme="light"] {
+            --bg-color: #f8fafc;
+            --card-bg: #f7f3f3;
+            --text-main: #0d7c64;
+            --text-muted: #64748b;
+            --primary-color: #1d4ed8;
+            --border-color: #2c7SS9df;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-top: 70px;
+        }
+
+        /* Barre de navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--bg-color);
+            opacity: 0.95;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Bouton Switch Mode Sombre/Clair */
+        #theme-toggle {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        #theme-toggle:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: var(--primary-color);
+            margin: 0.6rem auto 0 auto;
+            border-radius: 2px;
+        }
+
+        /* Accueil (Hero Section) */
+        #home {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+            text-align: center;
+        }
+
+        #home h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Style pour l'effet d'écriture */
+        .txt-type {
+            color: var(--primary-color);
+            border-right: 3px solid var(--primary-color);
+            padding-right: 5px;
+            animation: blink 0.75s step-end infinite;
+        }
+
+        @keyframes blink {
+            from, to { border-color: transparent }
+            50% { border-color: var(--primary-color); }
+        }
+
+        #home p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.8rem 2.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
+        }
+
+        /* Compétences */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-card {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .skill-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        /* Projets */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-info {
+            padding: 2rem;
+        }
+
+        .project-info h3 {
+            margin-bottom: 0.8rem;
+        }
+
+        .project-info p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background-color: var(--border-color);
+            font-size: 0.8rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        /* Contact */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            border-radius: 6px;
+            outline: none;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: var(--primary-color);
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        button[type="submit"]:hover {
+            opacity: 0.9;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            #home h1 { font-size: 2.3rem; }
+            .nav-links { display: none; }
+        }
+
+
+                 .circle-profile {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 150px; height: 150px;
+                border-radius: 50%;
+                overflow: hidden;
+                box-shadow: 0 0 15px rgba(0, 123, 255, 0.6);
+                position: relative;
+                }
+                .circle-profile img{
+                    width: 100%; height: 100%;
+                    object-fit: cover;
+                    filter: brightness(1.1); /*Effet de diminution de luminosité*/
+                }
+                /* les 'rayures lumineux' avec un dégradé comique*/
+            .circle-profile::after {
+                content: '';
+                position: absolute;
+                top: 0; left: 0;
+                width: 100%; height: 100%;
+                border-radius: 50%;
+                background: conic-gradient(
+                    from 180deg at 150%, 150%, 
+                  rgba(0, 255, 255, 0.4)Bdeg,
+                  rgba(0, 123, 255, 0.2)3Ddeg,
+                  rgba(0, 255, 255, 0.1)6Ddeg,
+                  transparent 9Bdeg,
+                  transparent 18Bdeg
+                    );
+                    filter: blur(3px);
+            }
+            [19:58, 6/3/2026] Ngonga Fleurina 🤪🤪🤪: /* --- SECTION PROJETS --- */
+.projects-section {
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 70px;
+    color: #12ce41;
+    position: relative;
+}
+
+/* Grille adaptative (2 colonnes sur PC, 1 colonne sur Mobile) */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 45px;
+}
+
+/* Carte de projet */
+.project-card {
+    background: #012127;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(53, 202, 228, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(1, 31, 43, 0.15);
+}
+
+/* Conteneur de l'image */
+.project-image-container {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+    background-color: #3bbffc;
+}
+
+.project-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Permet à l'image de bien remplir l'espace sans se déformer */
+    transition: transform 0.5s ease;
+}
+
+.project-card:hover .project-image {
+    transform: scale(1.05); /* Léger zoom au survol */
+}
+
+/* Badge (Design UI/UX ou Full-Stack) */
+.project-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: #007acc;
+    color: rgb(243, 248, 250);
+    padding: 5px 12px;
+    font-size: 0.8rem;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+/* Contenu textuel */
+.project-content {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.project-name {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    color: #11e411;
+}
+
+.project-description {
+    font-size: 0.95rem;
+    color: #2fe4eb;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+/* Badges de Technologies */
+.project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.project-tech span {
+    background: #52fdf5;
+    color: #000000;
+    padding: 4px 10px;
+    font-size: 0.8rem;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+/* Boutons */
+.project-links {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-project {
+    padding: 10px 18px;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    text-align: center;
+    transition: 0.2;
+}
+
+.btn-project.primary {
+    background: #2563eb;
+    color: rgb(230, 122, 122);
+}
+
+.btn-project.primary:hover {
+    background: #1d4ed8;
+}
+
+.btn-project.secondary {
+    background: transparent;
+    color: #2563eb;
+    border: 1px solid #2563eb;
+}
+
+.btn-project.secondary:hover {
+    background: #eff6ff;
+}
+[20:01, 6/3/2026] Ngonga Fleurina 🤪🤪🤪: 
+        /* --- SECTION CONTACT GLOBAL --- */
+.contact-section {
+    padding: 60px 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* Conteneur Flexbox/Grid : 2 colonnes sur grand écran, 1 seule sur mobile */
+.contact-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 40px;
+    margin-top: 80px;
+}
+
+/* --- COLONNE GAUCHE : INFOS DE FLEURINA --- */
+.contact-info-box {
+    background: #d88406;
+    padding: 30px;
+    border-radius: 12px;
+    border-left: 5px solid #2563eb; /* Une jolie ligne bleue de ton */
+}
+
+.contact-info-box h3 {
+    font-size: 1.8rem;
+    color: #0e0541;
+    margin-bottom: 5px;
+}
+
+.contact-subtitle {
+    color: #64748b;
+    font-size: 0.95rem;
+    margin-bottom: 30px;
+}
+
+/* Alignement des icônes et textes de coordonnées */
+.info-links-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 35px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.info-icon {
+    font-size: 1.5rem;
+    background: #6f90bb;
+    padding: 10px;
+    border-radius: 50px;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.info-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-text span {
+    font-size: 0.8rem;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.info-text strong {
+    font-size: 1rem;
+    color: #334155;
+}
+
+/* Boutons GitHub et LinkedIn */
+.social-networks h4 {
+    font-size: 1.1rem;
+    color: #1e293b;
+    margin-bottom: 12px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.social-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    color: rgb(255, 252, 252);
+    transition: opacity 0.2s;
+}
+
+.social-btn:hover {
+    opacity: 0.9;
+}
+
+.social-btn.github {
+    background: #24292e; /* Couleur officielle GitHub */
+}
+
+.social-btn.linkedin {
+    background: #0077b5; /* Couleur officielle LinkedIn */
+}
+
+/* --- COLONNE DROITE : LE FORMULAIRE --- */
+.contact-form-box {
+    background: #f59d19;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(21, 145, 194, 0.05);
+}
+
+.contact-form-box h3 {
+    font-size: 1.8rem;
+    color: #1e293b;
+    margin-bottom: 25px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #475569;
+}
+
+.form-group input, 
+.form-group textarea {
+    padding: 12px;
+    border: 1px solid #5082c0;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus, 
+.form-group textarea:focus {
+    border-color: #2563eb;
+}
+
+/* Bouton Envoyer */
+.btn-submit {
+    width: 100%;
+    background: #2563eb;
+    color: rgb(250, 250, 253);
+    border: none;
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="nav-container">
+            <a href="#" class="logo">NF.Portfolio</a>
+            <div class="nav-right">
+                <ul class="nav-links">
+                    <li><a href="#home">Accueil</a></li>
+                    <li><a href="#skills">Compétences</a></li>
+                    <li><a href="#projects">Projets</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <button id="theme-toggle">Mode Clair</button>
+            </div>
+        </nav>
+    </header>
+
+    <section id="home">
+        <h1>Salut, je suis NGONGA YOMDJI MARTHE FLEURINA <br><span class="txt-type" id="typewriter"></span></h1>
+        <div class="profil-conteneur">
+            <div class="circle-profile">
+                <img src="Snapchat-1116413947.jpg"alt="photo de NGONGA FLEURINA"class="photo-circle">
+            </div>
+        </div>  
+             </div>   
+            </div>
+            <div class="profil-text">
+                <h3>NGONGA FLEURINA</h3>
+                <p>Étudiante en Informatique & Technologies. Passionnée par l'administration système, le déploiement cloud, le développement web et l'intelligence artificiel, je développe des solutions logicielles rigoureuses et adaptées aux besoins modernes. Dynamique, et axée sur l'innovation continue.</p>
+<div class="profile-meta">
+    <div class="item"><i class="fas fa-venus"></i>
+   <div class="diplome-card"><p><span class="label">Genre:</span><span class="valeur">Féminin</span></p></div>
+   <div class="diplome-card"><p><span class="label">Née:</span><span class="valeur">10 juillet 2007</span></p></div>
+  <div class="diplome-card"><p><span class="label">ville:</span><span class="valeur">DOUALA, CAMEROUN</span></p></div>
+</div>
+
+            </div>
+        </div>
+        <h3 style="color:#cc990d">
+           Parcours Scolaire et Diplomes</h3>
+            <div class="diplome-card">
+                <div class="timeline-date">(2022-2023)</div>
+                <div class="timeline-title">GCE ORDINARY LEVEL</div>
+                <P>GBHS NYALLA</P>
+                <div class="timeline-item">
+                    <div class="timeline-date">2024-2025</div>
+                    <div class="timeline-title">GCE ADVANCE LEVEL</div>
+                    <p>GBHS NYALLA</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2025-2026</div>
+                    <div class="timeline-title">DUT 1</div>
+                    <P>IUT DE DOUALA</P>
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+                <section>
+        <a href="#projects" class="btn">Découvrir mes travaux</a>
+    </section>
+
+    <section id="skills">
+        <h2>Domaines d'expertise</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <h3>Systèmes & Cloud</h3>
+                <p style="color: var(--text-muted);">Linux (Ubuntu Server), Conteneurisation Docker, Virtualisation</p>
+            </div>
+            <div class="skill-card">
+                <h3>Développement</h3>
+                <p style="color: var(--text-muted);">Langage C, Algorithmique, Architecture logicielle</p>
+            </div>
+            <div class="skill-card">
+                <h3>Technologies Web</h3>
+                <p style="color: var(--text-muted);">HTML5 / CSS3, PHP, Gestion de bases de données MySQL (Stack LAMP)</p>
+            </div>
+            <div class="skill-card">
+                <h3>Réseaux</h3>
+                <p style="color: var(--text-muted);">Architecture TCP/IP, Adressage CIDR, Configuration réseau</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2>Travaux académique</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-info">
+                    <h3>Déploiement d'un Cloud Privé</h3>
+                    <p>Mise en place et isolation d'un service de stockage Cloud privé via des conteneurs légers pour une gestion centralisée et sécurisée des données.</p>
+                    <div class="project-tags">
+
+
+                        <span class="tag">Docker</span>
+                        <span class="tag">Nextcloud</span>
+                        <span class="tag">Linux</span>
+                    </div>
+                </div>
+            </div>
+            <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-info">
+                    <h3>Serveur d'Application Web</h3>
+                    <p>Déploiement d'un environnement de production virtuel complet capable de traiter des requêtes dynamiques et de manipuler des bases de données relationnelles.</p>
+                    <div class="project-tags">
+                        <span class="tag">Apache</span>
+                        <span class="tag">MySQL</span>
+                        <span class="tag">PHP</span> </div>
+                </div>
+            </div>
+            </div>
+                            <div class="projects-grid">
+                                <div class="projects-card">
+                                    <div class="project-info">
+                                <div class="project-card animate-on-scroll">
+                                    <div class="project-image-container">
+                                        <img src="capture food square.PNG" alt="Maquette UI/UX Application Food" class="project-image">
+                                        <div class="project-badge">Design UI/UX</div>
+                                    </div>
+                                    <div class="project-content">
+                                        <h3 class="project-name">Food App Prototype</h3>
+                                        <p class="project-description">
+                                            Conception et design d'une maquette complète pour une application mobile de livraison et de commande de nourriture. Focus mis sur l'expérience utilisateur (UX) et une interface visuelle (UI) moderne et gourmande.
+                                        </p>
+                                        <div class="project-tech">
+                                            <span>Figma</span>
+                                            <span>Design Thinking</span>
+                                            <span>Prototypage</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                    </div>
+                                </div>
+                <section>   
+                        <div class="project grid">
+                            <div class="project-card">
+                                <div class="project-card animate-on-scroll">
+                                    <div class="project-image-container">
+                                        <img src="Capture 1.PNG" alt="Plateforme CareerLink" class="project-image">
+                                        <div class="project-badge">Full-Stack</div>
+                                    </div>
+                                    <div class="project-content">
+                                        <h3 class="project-name">CareerLink</h3>
+                                        <p class="project-description">
+                                            Développement d'une plateforme web dynamique de mise en relation professionnelle. Permet aux utilisateurs de créer un profil, de publier des opportunités et de développer leur réseau professionnel.
+                                        </p>
+                                        <div class="project-tech">
+                                            <span>HTML5/CSS3</span>
+                                            <span>JavaScript</span>
+                                            <span>Base de données</span>
+                                            <span>Réseau</span>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                </section>
+                
+    <section class="contact-section">
+    <h2 class="section-title">Me Contacter</h2>
+    
+    <div class="contact-container">
+        
+        <div class="contact-info-box">
+            <h3>Mes Coordonnées</h3>
+            <p class="contact-subtitle">N'hésitez pas à me joindre directement ou à suivre mes travaux.</p>
+            
+            <div class="info-links-list">
+                <div class="info-item">
+                    <span class="info-icon">📞</span>
+                    <div class="info-text">
+                        <span>Téléphone</span>
+                        <strong>+237 688 59 98 42</strong> </div>
+                </div>
+
+                <div class="info-item">
+                    <span class="info-icon">✉️</span>
+                    <div class="info-text">
+                        <span>Email</span>
+                        <strong>ngongafleurina91@gmail.com</strong> </div>
+                </div>
+
+                <div class="info-item">
+                    <span class="info-icon">📍</span>
+                    <div class="info-text">
+                        <span>Localisation</span>
+                        <strong>Douala, Cameroun</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="social-networks">
+                <h4>Retrouvez-moi sur :</h4>
+                <div class="social-icons">
+                    <a href="https://github.com/ton-profil" target="_blank" rel="noopener noreferrer" class="social-btn github">
+                        <i>🐙</i> GitHub
+                    </a>
+                    <a href="https://linkedin.com/in/ton-profil" target="_blank" rel="noopener noreferrer" class="social-btn linkedin">
+                        <i>💼</i> LinkedIn
+                    </a>
+                </div>
+            </div>
+        </div>
+           <align>
+        <div class="contact-form-box">
+            <h3>M'envoyer un message</h3>
+            <form action="#" method="POST">
+                <div class="form-group">
+                    <label for="name">Nom complet</label>
+                    <input type="text" id="name" name="name" placeholder="Votre nom" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Adresse Email</label>
+                    <input type="email" id="email" name="email" placeholder="Votre adresse email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" placeholder="Votre message ici..." required></textarea>
+                </div>
+                
+                <button type="submit" class="btn-submit">Envoyer le message</button></align>
+            </form>
+        </div>
+
+    </div>
+</section>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 | Conçu pour divers projets académique.</p>
+    </footer>
+
+    <script>
+        // 1. EFFET MACHINE À ÉCRIRE (TYPEWRITER)
+        const words = ["Développeuse Web.", "Administratrice Système.", "Passionnée de Cloud.", "Intelligence Artificielle dans la robotique"];
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typewriterElement = document.getElementById("typewriter");
+
+        function type() {
+            const currentWord = words[wordIndex];
+            
+            if (isDeleting) {
+                typewriterElement.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typewriterElement.textContent = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = 100;
+
+            if (isDeleting) {
+                typeSpeed /= 2; // Efface plus vite
+            }
+
+            if (!isDeleting && charIndex === currentWord.length) {
+                typeSpeed = 2000; // Pause à la fin du mot
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length; // Passe au mot suivant
+                typeSpeed = 500; // Pause avant de réécrire
+            }
+
+            setTimeout(type, typeSpeed);
+        }
+
+        // Lancement de l'effet au chargement
+        document.addEventListener("DOMContentLoaded", () => {
+            type();
+        });
+
+
+        // 2. GESTION DU MODE SOMBRE / CLAIR
+        const themeToggleBtn = document.getElementById("theme-toggle");
+        
+        themeToggleBtn.addEventListener("click", () => {
+            const currentTheme = document.documentElement.getAttribute("data-theme");
+            if (currentTheme === "light") {
+                document.documentElement.removeAttribute("data-theme");
+                themeToggleBtn.textContent = "Mode Clair";
+            } else {
+                document.documentElement.setAttribute("data-theme", "light");
+                themeToggleBtn.textContent = "Mode Sombre";
+            }
+        });
+
+        // 3. PETITE ANIMATION DE VALIDATION DU FORMULAIRE
+        document.getElementById("contactForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            alert("Merci ! Votre message a été simulé avec succès pour la démonstration.");
+            this.reset();
+        });
+    </script>
+</body>
+</html>
